@@ -1,28 +1,33 @@
 import "./styles.css";
-import Card from "./card.js";
+import List from "./list.js";
 export default function App() {
-  let products = ["Laptop", "Mobile", "Keyboard"];
-  let products2 = [
+  let list = [
     {
-      productName: "computer",
-      price: 25000,
-      description: "this is a best product",
+      name: "maribel",
+      userName: "@maribelk",
+      date: "Oct6 01, 2002",
+      montylyCc: "$3.00",
     },
     {
-      productName: "TabelFan",
-      price: 5000,
-      description: "this is a best product",
+      name: "Rahul",
+      userName: "@maribelk",
+      date: "Oct6 01, 2002",
+      montylyCc: "$10.00",
+    },
+    {
+      name: "somashree",
+      userName: "@maribelk",
+      date: "Oct6 01, 2002",
+      montylyCc: "$20.00",
     },
   ];
   return (
     <div className="App">
-      {products2.map((p, i) => {
+      {list.map((p, i) => {
         return (
-          <Card
-            productName={p.productName}
-            price={p.price}
-            des={p.description}
-          />
+          <div ClassName="users">
+            <List name={p.name} date={p.date} monthly={p.montylyCc} />
+          </div>
         );
       })}
     </div>
