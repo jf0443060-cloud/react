@@ -1,1 +1,28 @@
 
+import "./styles.css";
+import { useState } from "react";
+export default function Todo() {
+  const [items, setItems] = useState(["BREAD", "MILK"]);
+  const [task, setTask] = useState("");
+  function handleChange(e) {
+    console.log(e.target.value);
+    setTask(e.target.value);
+  }
+  return (
+    <div className="container">
+      <h1> TODO LIST</h1>
+      <input
+        type="text"
+        placeholder="add your text"
+        value={task}
+        onChange={handleChange}
+      />
+      <button> add item </button>
+      {!items.length ? (
+        <div> No Items </div>
+      ) : (
+        items.map((items, index) => <p key={index}>{items}</p>)
+      )}
+    </div>
+  );
+}
