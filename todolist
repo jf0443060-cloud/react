@@ -1,31 +1,48 @@
-
-
-import { useState } from "react";
+import { useState } from 'react'
 export default function Todo() {
     const [items, setItems] = useState([]);
-    const [task, setTask] = useState("");
-    function handleChange(e) {
-        console.log(e.target.value);
-        setTask(e.target.value);
 
+    const [task, setTask] = useState("")
+
+    function handleChange(e) {
+        console.log(e.target.value)
+        setTask(e.target.value)
     }
 
     function addItem() {
-        let newItems = [...items];
-        newItems.push(task);
-        setItems(newItems);
-        setTask("");
+        let newItem = [...items]
+        newItem.push({
+            title: task,
+            isCompleted: false,
+            creatAt: new Date()
+        })
+        console.log(newItem)
+        setItems(newItem)
+        setTask(" ")
     }
+
+        function updateItem(index){
+            let arr = [...items];
+            let item = arr[index];
+            item.isCompleted = true;
+            setItems(arr)
+
+        }
+
+
     return (
-        <div className="container">
-            <h1> TODO LIST</h1>
-            <input type="text" placeholder="add your text" value={task} onChange={handleChange} />
-            <button onClick={addItem}> add item </button>
+        <div>
+            <h1> TODO LIST </h1>
+            <input type='text' value={task} onChange={handleChange} placeholder='please enter your hobby' />
+            <button onClick={addItem}> ADD ITEM </button>
             {!items.length ? (
-                <div> No Items </div>
-            ) : (
-                items.map((item, index) => <p>{item}</p>)
-            )}
+                <div> no item</div>
+            ) : items.map((item, index) =>
+                <p onClick={() => updateItem(index)} className='todoItem'
+                    style={item.isCompleted ?
+                        { textDecoration: 'line-through', color: 'gray' } : {}}> {item.title}</p>)
+
+            }
         </div>
-    );
+    )
 }
