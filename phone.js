@@ -1,46 +1,44 @@
 import { useState } from "react"
-
+let searchd = [
+    { name: 'akram', number: 8101946420 },
+    { name: 'somashree', number: 9091065647 },
+    { name: 'ali', number: 8391823976 }
+]
 export default function Contact() {
-    let searchd = [
-        { name: 'akram', phone: 8100154584 },
-        { name: 'somashree', phone: 987484454 },
-        { name: 'rahul', phone: 65846859485 }
-    ]
-    const [phone, setPhone] = useState([])
+    const [user, setUser] = useState([])
 
     function handleChange(e) {
-        let search = e.target.value;
-
-        let ss = searchd.filter(m => m.name === search)
-        setPhone(ss)
-
+        let search = e.target.value
+       let ss =  searchd.filter(m => m.name === search)
+        setUser(ss)
 
     }
     return (
-        <div className="phone">
+        <div className="parent">
 
+            < div className="left" >
 
-            <div className="left">
+                <input type="text" placeholder="search..." className="formInput" onChange={handleChange} />
 
-                <input type="text" placeholder="search" onChange={handleChange} />
+                {user.map((n, index) =>
+                    <div className="user">
+                        <div> <img src="pt.png" style={{ width: "50px", height: "50px", borderRadius: "50%", border: "2px solid red" }} /> </div>
+                        <div className="userDetails">
+                            <div>{n.name} </div>
+                            <div>{n.number} </div>
+                        </div>
+                    </div>
+                )
 
-                {
-                    phone.map((n, index) => <p>
-                        {n.name} <div> {n.phone} </div></p>)
                 }
+            </div >
 
-                {
-                    searchd.map(( n, index) => 
-                    <p> {n.name} <div> {n.phone} </div></p>)
-                }
+            <div>
+                <div> <input type="text" placeholder="name" className="formInput" /> </div>
+                <div> <input type="number" placeholder="number" className="formInput" /> </div>
+                <div className="file"> <input type="file" className="formInput" /></div>
+                <div className="nbutton"><button className="button"> SAVE </button></div>
             </div>
-            <div className="right">
-                <div><input type="file" /></div>
-                <input type="text" placeholder="name" />
-                <input type="number" />
-                <button>  SAVE </button>
-            </div>
-
-        </div>
+        </div >
     )
 }
