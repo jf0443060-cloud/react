@@ -1,17 +1,46 @@
 import { useState } from "react"
-let searchd = [
-    { name: 'akram', number: 8101946420 },
-    { name: 'somashree', number: 9091065647 },
-    { name: 'ali', number: 8391823976 }
-]
+
 export default function Contact() {
     const [user, setUser] = useState([])
+    const [filterItem, setFilter] = useState([])
+    const [search, setSearch] = useState("")
 
     function handleChange(e) {
-        let search = e.target.value
-       let ss =  searchd.filter(m => m.name === search)
-        setUser(ss)
+        let searchText = e.target.value
+        setSearch(searchText)
+        let ss = user.filter(m => m.name === searchText)
+        setFilter(ss)
 
+    }
+
+    const [name, setName] = useState("")
+    const [number, setNumber] = useState("")
+    const [img, setImg] = useState("")
+
+    function handleName(e) {
+        let set = e.target.value;
+        setName(set)
+    }
+
+    function handleNumber(e) {
+        let set2 = e.target.value;
+        setNumber(set2)
+    }
+
+    function handleImage(e) {
+        let set3 = e.target.files[0];
+        setImg(set3)
+    }
+
+    function save() {
+        let arr = [...user]
+        arr.push({
+            name: name,
+            number: number,
+            image: img
+        }
+        )
+        setUser(arr)
     }
     return (
         <div className="parent">
@@ -20,24 +49,41 @@ export default function Contact() {
 
                 <input type="text" placeholder="search..." className="formInput" onChange={handleChange} />
 
-                {user.map((n, index) =>
-                    <div className="user">
-                        <div> <img src="pt.png" style={{ width: "50px", height: "50px", borderRadius: "50%", border: "2px solid red" }} /> </div>
-                        <div className="userDetails">
-                            <div>{n.name} </div>
-                            <div>{n.number} </div>
+                {search.length === 0 ? (
+                    user.map((n, index) =>
+                        <div className="user">
+                            <div> <img src={URL.createObjectURL(n.image)} style={{ width: "50px", height: "50px", borderRadius: "50%", border: "2px solid red" }} /> </div>
+                            <div className="userDetails">
+                                <div>{n.name} </div>
+                                <div>{n.number} </div>
+                            </div>
+
                         </div>
-                    </div>
+                    )) : (
+                    filterItem.map((n, index) =>
+                        <div className="user">
+                            <div> <img src={URL.createObjectURL(n.image)} style={{ width: "50px", height: "50px", borderRadius: "50%", border: "2px solid red" }} /> </div>
+                            <div className="userDetails">
+                                <div>{n.name} </div>
+                                <div>{n.number} </div>
+                            </div>
+
+                        </div>
+                    )
+
+
                 )
 
                 }
+
+
             </div >
 
             <div>
-                <div> <input type="text" placeholder="name" className="formInput" /> </div>
-                <div> <input type="number" placeholder="number" className="formInput" /> </div>
-                <div className="file"> <input type="file" className="formInput" /></div>
-                <div className="nbutton"><button className="button"> SAVE </button></div>
+                <div> <input type="text" placeholder="name" className="formInput" value={name} onChange={handleName} /> </div>
+                <div> <input type="number" placeholder="number" className="formInput" value={number} onChange={handleNumber} /> </div>
+                <div className="file"> <input type="file" className="formInput" onChange={handleImage} /></div>
+                <div className="nbutton" onClick={save}><button className="button"> SAVE </button></div>
             </div>
         </div >
     )
