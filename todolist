@@ -1,48 +1,147 @@
-import { useState } from 'react'
-export default function Todo() {
-    const [items, setItems] = useState([]);
+import { useState } from "react"
 
-    const [task, setTask] = useState("")
+export default function Cyber() {
 
-    function handleChange(e) {
-        console.log(e.target.value)
-        setTask(e.target.value)
+    const [coustomer, setCoustomer] = useState([])
+    const [search, setSearch] = useState("")
+    const [filter, serFilter] = useState([])
+    function searchCoustomer(e) {
+        let ss = e.target.value;
+        setSearch(ss)
+        console.log(ss,search)
+        let ss2 = coustomer.filter(m => m.name === ss)
+        serFilter(ss2)
     }
 
-    function addItem() {
-        let newItem = [...items]
-        newItem.push({
-            title: task,
-            isCompleted: false,
-            creatAt: new Date()
+    const [name, setName] = useState("")
+    const [number, setNumber] = useState("")
+    const [service, setService] = useState("")
+    const [amount, setAmount] = useState("")
+    const [date, setdate] = useState("")
+    const [status, setStatus] = useState("")
+
+    function updateName(e) {
+        let nm = e.target.value;
+        console.log(nm)
+        setName(nm)
+    }
+
+    function updateNumber(e) {
+        let nm2 = e.target.value;
+        setNumber(nm2)
+    }
+
+    function updateService(e) {
+        let nm3 = e.target.value;
+        setService(nm3)
+    }
+
+    function updateAmount(e) {
+        let nm4 = e.target.value;
+        setAmount(nm4)
+    }
+
+    function updateDate(e) {
+        let nm5 = e.target.value;
+        console.log(nm5)
+        setdate(nm5)
+    }
+
+    function updateStatus(e) {
+        let nm6 = e.target.value;
+        setStatus(nm6)
+    }
+
+    function addCoustomer() {
+        let cc = [...coustomer]
+        cc.push({
+            name: name,
+            number: number,
+            service: service,
+            amount: amount,
+            date: date,
+            status: status
+
         })
-        console.log(newItem)
-        setItems(newItem)
-        setTask(" ")
+        setCoustomer(cc)
+        console.log(cc)
+        setName("")
+        setNumber("")
+        setService("")
+        setAmount("")
+        setdate("")
+        setStatus("")
     }
 
-        function updateItem(index){
-            let arr = [...items];
-            let item = arr[index];
-            item.isCompleted = true;
-            setItems(arr)
-
-        }
-
+    function deletUser(index) {
+        let arr = [...coustomer]
+        arr.splice(index, 1)
+        setCoustomer(arr)
+    }
 
     return (
         <div>
-            <h1> TODO LIST </h1>
-            <input type='text' value={task} onChange={handleChange} placeholder='please enter your hobby' />
-            <button onClick={addItem}> ADD ITEM </button>
-            {!items.length ? (
-                <div> no item</div>
-            ) : items.map((item, index) =>
-                <p onClick={() => updateItem(index)} className='todoItem'
-                    style={item.isCompleted ?
-                        { textDecoration: 'line-through', color: 'gray' } : {}}> {item.title}</p>)
+            <div>  <h1 className="h1"> Cyber Cafe Coustomer Manager </h1> </div>
+            <div className="parent">
 
-            }
+                <div className="left">
+                    <div className="totalCoustomer">
+                        <div className="service"> total Coustomer </div>
+                        <input type="text" placeholder="search coustomer " value={search} onChange={searchCoustomer} />
+                        {search.length === 0 ? (
+                            coustomer.sort((a, b) => a.name.localeCompare(b.name)) .map((n, index) =>
+                                <div className="object">
+                                    <div> {n.name} </div>
+                                    <div> {n.number} </div>
+                                    <div> {n.service} </div>
+                                    <div> {n.amount} </div> 
+                                    <div> {n.date} </div>
+                                    <div> {n.status} </div>
+                                    <div className="parentButton">
+                                        <button className="deletButton" onClick={() => deletUser(index)} > delet </button>
+                                        <button className="editButton"> edit </button>
+                                    </div>
+
+                                </div>
+                            )
+                        ) :  filter.map((n, index) =>
+                                <div className="object">
+                                    <div> {n.name} </div>
+                                    <div> {n.number} </div>
+                                    <div> {n.service} </div>
+                                    <div> {n.amount} </div>
+                                    <div> {n.date} </div>
+                                    <div> {n.status} </div>
+                                    <div className="parentButton">
+                                        <button className="deletButton" onClick={() => deletUser(index)} > delet </button>
+                                        <button className="editButton"> edit </button>
+                                    </div>
+
+                                </div>
+                            )
+                        
+                        }
+                    </div>
+
+                    <div className="service">  today Coustomer </div>
+                    <div className="service"> monthly income  </div>
+                    <div className="service"> Today Income </div>
+                    <div className="service"> Complete Coustomer </div>
+                    <div className="service"> Pending coustomer </div>
+                </div>
+                <div className="right">
+                    <div>   <h1 className="add"> ADD Coustomer </h1> </div>
+                    <input type="text" className="input" placeholder="enter coustomer name" value={name} onChange={updateName} />
+                    <input type="number" className="input" placeholder="enter number" value={number} onChange={updateNumber} />
+                    <input type="text" className="input" placeholder="enter service" value={service} onChange={updateService} />
+                    <input type="number" className="input" placeholder="enter Aamount" value={amount} onChange={updateAmount} />
+                    <input type="date" className="input" placeholder="enter date" value={date} onChange={updateDate} />
+                    <input type="text" className="input" placeholder="enter status" value={status} onChange={updateStatus} />
+                    <div className="parentButton"> <button onClick={addCoustomer} className="button"> ADD  </button> </div>
+
+                </div>
+
+            </div>
         </div>
     )
 }
